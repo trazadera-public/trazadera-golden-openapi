@@ -71,4 +71,12 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub trazadera-public Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/trazadera-public/trazadera-golden-openapi</url>
+		</repository>
+	</distributionManagement>
+
 </project>
