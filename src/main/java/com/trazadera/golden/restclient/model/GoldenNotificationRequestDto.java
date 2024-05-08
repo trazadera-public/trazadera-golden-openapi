@@ -21,26 +21,25 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 /**
- * Represents a record search request
+ * Represents a record search for notifications
  */
-@Schema(description = "Represents a record search request")
+@Schema(description = "Represents a record search for notifications")
 
-public class GoldenSearchRequestDto {
+public class GoldenNotificationRequestDto {
   @SerializedName("transformation")
   private String transformation = null;
 
   @SerializedName("record")
-  private Map record = null;
+  private Map<String, Object> record = new HashMap<String, Object>();
 
-  @SerializedName("pageNumber")
-  private Integer pageNumber = null;
+  @SerializedName("notify")
+  private Boolean notify = null;
 
-  @SerializedName("pageSize")
-  private Integer pageSize = null;
-
-  public GoldenSearchRequestDto transformation(String transformation) {
+  public GoldenNotificationRequestDto transformation(String transformation) {
     this.transformation = transformation;
     return this;
   }
@@ -58,58 +57,45 @@ public class GoldenSearchRequestDto {
     this.transformation = transformation;
   }
 
-  public GoldenSearchRequestDto record(Map record) {
+  public GoldenNotificationRequestDto record(Map<String, Object> record) {
     this.record = record;
     return this;
   }
 
+  public GoldenNotificationRequestDto putRecordItem(String key, Object recordItem) {
+    this.record.put(key, recordItem);
+    return this;
+  }
+
    /**
-   * Get record
+   * A record is a document with a unique identifier that is used as the core of Golden and represents a data record.
    * @return record
   **/
-  @Schema(required = true, description = "")
-  public Map getRecord() {
+  @Schema(required = true, description = "A record is a document with a unique identifier that is used as the core of Golden and represents a data record.")
+  public Map<String, Object> getRecord() {
     return record;
   }
 
-  public void setRecord(Map record) {
+  public void setRecord(Map<String, Object> record) {
     this.record = record;
   }
 
-  public GoldenSearchRequestDto pageNumber(Integer pageNumber) {
-    this.pageNumber = pageNumber;
+  public GoldenNotificationRequestDto notify(Boolean notify) {
+    this.notify = notify;
     return this;
   }
 
    /**
-   * Optional page number for multiple results. Default is 0.
-   * @return pageNumber
+   * Send notification flag. If enabled and the entity has events enabled, events will be sent. Default is false.
+   * @return notify
   **/
-  @Schema(description = "Optional page number for multiple results. Default is 0.")
-  public Integer getPageNumber() {
-    return pageNumber;
+  @Schema(description = "Send notification flag. If enabled and the entity has events enabled, events will be sent. Default is false.")
+  public Boolean isNotify() {
+    return notify;
   }
 
-  public void setPageNumber(Integer pageNumber) {
-    this.pageNumber = pageNumber;
-  }
-
-  public GoldenSearchRequestDto pageSize(Integer pageSize) {
-    this.pageSize = pageSize;
-    return this;
-  }
-
-   /**
-   * Optional page size for multiple results. Default is 10.
-   * @return pageSize
-  **/
-  @Schema(description = "Optional page size for multiple results. Default is 10.")
-  public Integer getPageSize() {
-    return pageSize;
-  }
-
-  public void setPageSize(Integer pageSize) {
-    this.pageSize = pageSize;
+  public void setNotify(Boolean notify) {
+    this.notify = notify;
   }
 
 
@@ -121,28 +107,26 @@ public class GoldenSearchRequestDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GoldenSearchRequestDto goldenSearchRequestDto = (GoldenSearchRequestDto) o;
-    return Objects.equals(this.transformation, goldenSearchRequestDto.transformation) &&
-        Objects.equals(this.record, goldenSearchRequestDto.record) &&
-        Objects.equals(this.pageNumber, goldenSearchRequestDto.pageNumber) &&
-        Objects.equals(this.pageSize, goldenSearchRequestDto.pageSize);
+    GoldenNotificationRequestDto goldenNotificationRequestDto = (GoldenNotificationRequestDto) o;
+    return Objects.equals(this.transformation, goldenNotificationRequestDto.transformation) &&
+        Objects.equals(this.record, goldenNotificationRequestDto.record) &&
+        Objects.equals(this.notify, goldenNotificationRequestDto.notify);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(transformation, record, pageNumber, pageSize);
+    return Objects.hash(transformation, record, notify);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GoldenSearchRequestDto {\n");
+    sb.append("class GoldenNotificationRequestDto {\n");
     
     sb.append("    transformation: ").append(toIndentedString(transformation)).append("\n");
     sb.append("    record: ").append(toIndentedString(record)).append("\n");
-    sb.append("    pageNumber: ").append(toIndentedString(pageNumber)).append("\n");
-    sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
+    sb.append("    notify: ").append(toIndentedString(notify)).append("\n");
     sb.append("}");
     return sb.toString();
   }

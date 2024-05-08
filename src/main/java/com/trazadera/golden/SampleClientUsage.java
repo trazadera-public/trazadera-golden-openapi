@@ -21,7 +21,7 @@ public class SampleClientUsage {
         api.setApiClient(apiClient);
 
         // Use the API to list all entities
-        EntityListResponseDto entities = api.getEntities();
+        EntityListResponseDto entities = api.getAllEntities();
         System.out.println(entities);
     }
 

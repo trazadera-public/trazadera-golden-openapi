@@ -19,20 +19,22 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.trazadera.golden.restclient.model.EntityEvent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 /**
- * Represents deleted record result
+ * Represents the result of sent notifications
  */
-@Schema(description = "Represents deleted record result")
+@Schema(description = "Represents the result of sent notifications")
 
-public class GoldenDeleteResponseDto {
-  @SerializedName("record")
-  private Map<String, Object> record = null;
+public class GoldenNotificationResponseDto {
+  @SerializedName("notifications")
+  private Integer notifications = null;
+
+  @SerializedName("events")
+  private List<EntityEvent> events = null;
 
   @SerializedName("errors")
   private List<String> errors = null;
@@ -40,38 +42,56 @@ public class GoldenDeleteResponseDto {
   @SerializedName("messages")
   private List<String> messages = null;
 
-  public GoldenDeleteResponseDto record(Map<String, Object> record) {
-    this.record = record;
-    return this;
-  }
-
-  public GoldenDeleteResponseDto putRecordItem(String key, Object recordItem) {
-    if (this.record == null) {
-      this.record = new HashMap<String, Object>();
-    }
-    this.record.put(key, recordItem);
+  public GoldenNotificationResponseDto notifications(Integer notifications) {
+    this.notifications = notifications;
     return this;
   }
 
    /**
-   * A record is a document with a unique identifier that is used as the core of Golden and represents a data record.
-   * @return record
+   * Number of notifications sent out.
+   * @return notifications
   **/
-  @Schema(description = "A record is a document with a unique identifier that is used as the core of Golden and represents a data record.")
-  public Map<String, Object> getRecord() {
-    return record;
+  @Schema(description = "Number of notifications sent out.")
+  public Integer getNotifications() {
+    return notifications;
   }
 
-  public void setRecord(Map<String, Object> record) {
-    this.record = record;
+  public void setNotifications(Integer notifications) {
+    this.notifications = notifications;
   }
 
-  public GoldenDeleteResponseDto errors(List<String> errors) {
+  public GoldenNotificationResponseDto events(List<EntityEvent> events) {
+    this.events = events;
+    return this;
+  }
+
+  public GoldenNotificationResponseDto addEventsItem(EntityEvent eventsItem) {
+    if (this.events == null) {
+      this.events = new ArrayList<EntityEvent>();
+    }
+    this.events.add(eventsItem);
+    return this;
+  }
+
+   /**
+   * Notification events. One for each found record.
+   * @return events
+  **/
+  @Schema(description = "Notification events. One for each found record.")
+  public List<EntityEvent> getEvents() {
+    return events;
+  }
+
+  public void setEvents(List<EntityEvent> events) {
+    this.events = events;
+  }
+
+  public GoldenNotificationResponseDto errors(List<String> errors) {
     this.errors = errors;
     return this;
   }
 
-  public GoldenDeleteResponseDto addErrorsItem(String errorsItem) {
+  public GoldenNotificationResponseDto addErrorsItem(String errorsItem) {
     if (this.errors == null) {
       this.errors = new ArrayList<String>();
     }
@@ -92,12 +112,12 @@ public class GoldenDeleteResponseDto {
     this.errors = errors;
   }
 
-  public GoldenDeleteResponseDto messages(List<String> messages) {
+  public GoldenNotificationResponseDto messages(List<String> messages) {
     this.messages = messages;
     return this;
   }
 
-  public GoldenDeleteResponseDto addMessagesItem(String messagesItem) {
+  public GoldenNotificationResponseDto addMessagesItem(String messagesItem) {
     if (this.messages == null) {
       this.messages = new ArrayList<String>();
     }
@@ -127,24 +147,26 @@ public class GoldenDeleteResponseDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GoldenDeleteResponseDto goldenDeleteResponseDto = (GoldenDeleteResponseDto) o;
-    return Objects.equals(this.record, goldenDeleteResponseDto.record) &&
-        Objects.equals(this.errors, goldenDeleteResponseDto.errors) &&
-        Objects.equals(this.messages, goldenDeleteResponseDto.messages);
+    GoldenNotificationResponseDto goldenNotificationResponseDto = (GoldenNotificationResponseDto) o;
+    return Objects.equals(this.notifications, goldenNotificationResponseDto.notifications) &&
+        Objects.equals(this.events, goldenNotificationResponseDto.events) &&
+        Objects.equals(this.errors, goldenNotificationResponseDto.errors) &&
+        Objects.equals(this.messages, goldenNotificationResponseDto.messages);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(record, errors, messages);
+    return Objects.hash(notifications, events, errors, messages);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GoldenDeleteResponseDto {\n");
+    sb.append("class GoldenNotificationResponseDto {\n");
     
-    sb.append("    record: ").append(toIndentedString(record)).append("\n");
+    sb.append("    notifications: ").append(toIndentedString(notifications)).append("\n");
+    sb.append("    events: ").append(toIndentedString(events)).append("\n");
     sb.append("    errors: ").append(toIndentedString(errors)).append("\n");
     sb.append("    messages: ").append(toIndentedString(messages)).append("\n");
     sb.append("}");
