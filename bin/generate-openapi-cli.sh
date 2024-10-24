@@ -23,9 +23,14 @@ TEMP_DIR=$(mktemp -d)
 # Generate the OpenAPI client
 swagger-codegen generate -i ./api-docs.json --api-package com.trazadera.golden.restclient.api --model-package com.trazadera.golden.restclient.model --invoker-package com.trazadera.golden.restclient.invoker -l java -o $TEMP_DIR
 
+# ---- BUGS
 # Now traverse all the generated Java files and remove the lines that contains the @javax.annotation.Generated annotation
 # This is necessary because the javax.annotation.Generated is not available in Java 9+
 find $TEMP_DIR/src/main/java/com/trazadera/golden/restclient/ -name "*.java" -exec sed -i '' '/@javax.annotation.Generated/d' {} \;
+
+# The interface java.util.Map is generated but import is for java.util.HashMap
+# Add 'import java.util.Map'
+find $TEMP_DIR/src/main/java/com/trazadera/golden/restclient/ -name "*.java" -exec sed -i '' 's/import java.util.HashMap;/import java.util.HashMap;import java.util.Map;/' {} \;
 
 # Clean the current client
 rm -rf src/main/java/com/trazadera/golden/restclient/*

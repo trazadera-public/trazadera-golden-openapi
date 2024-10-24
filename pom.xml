@@ -5,7 +5,7 @@
 
 	<groupId>com.trazadera</groupId>
 	<artifactId>trazadera-golden-openapi</artifactId>
-	<version>1.9.0</version>
+	<version>15-SNAPSHOT</version>
 	<name>trazadera-golden-cli</name>
 	<description>Trazadera Golden OpenAPI Java Client</description>
 
